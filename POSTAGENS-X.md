@@ -2,20 +2,20 @@
 
 Rascunhos para Victor publicar posteriormente. **Nada foi enviado.** Público: pessoas curiosas sobre engenharia/ciência e quem acompanha a construção dos projetos. Um assunto por post, sem métricas privadas ou promessa de data.
 
-## Planejamento
+## Apresentação do projeto
 
-Condição/mídia: Pode ser usado para anunciar a intenção. Mostrar esquema identificado como plano ou referência do Fusquinha.
+Condição/mídia: Pode acompanhar uma captura real da versão local. Não anuncia uma URL pública.
 
 ```text
-Quero abrir Itaipu por dentro em um experimento 3D. A pessoa poderá seguir a água e enxergar dois caminhos diferentes: geração e vertedouro. O plano começa com um corte simples e fontes oficiais.
+Abri Itaipu por dentro em um experimento 3D educativo. Dá para seguir a água, abrir a unidade geradora e comparar dois caminhos: geração e vertedouro. O corte é um esquema sem escala, baseado em fontes oficiais.
 ```
 
 ## Bastidor
 
-Condição/mídia: Usar somente depois de existir o protótipo descrito. Anexar captura real da interação; ajustar o texto ao que efetivamente funcionar.
+Condição/mídia: Protótipo local validado. Anexar captura real alterando um fluxo enquanto o outro continua.
 
 ```text
-No protótipo de Itaipu, a água conduz a explicação. Um controle destaca o caminho da geração; outro mostra o vertedouro. Estou ajustando o corte para que essa diferença fique visível de primeira.
+No experimento de Itaipu, a água que passa pela turbina move o eixo do gerador. O vertedouro tem outro caminho. Deixei os dois fluxos independentes para explorar essa diferença — sem fingir que o controle é uma operação real da usina.
 ```
 
 ## Lançamento

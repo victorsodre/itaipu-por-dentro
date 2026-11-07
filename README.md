@@ -1,6 +1,6 @@
 # Itaipu por dentro
 
-> **Estado: documentação inicial.** Aplicação ainda não implementada. Planejamento criado em 2026-11-07; prioridade recomendada 9/10.
+> **Desenvolvimento concluído e validado localmente em 07/11/2026.** Aplicação estática; repositório privado, sem deploy público. Projeto 9/10 da coleção.
 
 **Por onde a água passa para gerar energia?**
 
@@ -20,16 +20,35 @@ O Reel sobre o vertedouro registrou 4.397 visualizações; o Short correspondent
 1. [Escopo e critérios de conclusão](docs/ESCOPO.md).
 2. [Lista de execução](docs/EXECUCAO.md).
 3. [Identidade visual do ovictorlab](docs/IDENTIDADE-VISUAL.md).
-4. [Arquitetura proposta e reaproveitamento do Fusquinha](docs/ARQUITETURA.md).
-5. [Assets, fontes e pendências de apuração](docs/ASSETS-E-FONTES.md).
+4. [Arquitetura implementada e reaproveitamento do Fusquinha](docs/ARQUITETURA.md).
+5. [Assets e fontes verificadas](docs/ASSETS-E-FONTES.md).
 6. [Manutenção, validação e publicação futura](docs/MANUTENCAO.md).
 7. [Decisões e estado do projeto](docs/DECISOES.md).
 8. [Textos para o X](POSTAGENS-X.md) e [ordem da coleção](docs/COLECAO.md).
 
-**Próxima ação:** Obter o esquema oficial e desenhar dois percursos separados: geração e vertedouro.
+## Executar e conferir
 
-**Esforço relativo:** Médio/alto: geometria de corte e distinção dos trajetos são prioritárias. Prazo só deve ser estimado depois da validação de modelo e fontes.
+Node ≥22.18. Versões fixadas em `package-lock.json`.
 
-## O que esta entrega inclui
+```sh
+npm ci
+npm run dev
+npm test
+npm run check
+npm run build
+npm run preview
+```
 
-Guias de desenvolvimento e manutenção, identidade visual, limites de escopo e rascunhos de divulgação. Não há aplicação, modelo 3D novo, licença de asset adquirida ou site publicado. Os repositórios foram preparados para trabalho independente, inicialmente privado. Não existe `npm install`, `npm test` ou deploy a executar nesta fase.
+O build está em `dist/`, com caminhos relativos para funcionar em subpasta. Não exige backend, LLM, API paga nem a GPU de produção. [Validação e limites](docs/VALIDACAO.md) · [Apuração](docs/APURACAO.md) · [Direção visual](docs/DIRECAO-VISUAL.md).
+
+## O que funciona
+
+- Seguir a água por geração ou vertedouro, comparar os caminhos e controlar suas vazões ilustrativas de forma independente.
+- Abrir a unidade e observar turbina, eixo e rotor girando juntos, com estator fixo. A água não passa pelo gerador.
+- Explorar seis conjuntos por lista/clique, busca, isolamento, zoom, tour e retorno à vista completa.
+- Percurso por slider/etapas, pausa, reset, malha e PNG horizontal 1920×1080 ou vertical 1080×1920.
+- Interface responsiva, teclado, movimento reduzido, pausa em aba oculta e explicações acessíveis sem WebGL. Sem áudio ou autoplay.
+
+**Limites:** diorama educativo sem escala, com uma unidade e uma calha ilustrativa. Os caminhos estão aproximados para comparação; não representam a implantação real da usina. Quantidade de marcadores indica vazão qualitativa, sem RPM proporcional, potência calculada ou simulação hidráulica. Validação móvel emulada no Chrome; não ensaiado em telefone físico ou Safari.
+
+**Próxima etapa fora desta entrega:** escolher hospedagem e autorizar publicação, se desejado. Os rascunhos do X permanecem para publicação manual posterior.

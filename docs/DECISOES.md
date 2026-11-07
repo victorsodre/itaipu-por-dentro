@@ -8,12 +8,17 @@
 - Repositório inicialmente privado por escolha operacional conservadora nesta fase. O pedido autoriza o envio dos guias; não foi tratado como solicitação de implementar e publicar os aplicativos.
 - Nenhuma postagem no X enviada. Textos de protótipo e lançamento têm condições explícitas de uso.
 
-## Pendências técnicas
+## 2026-11-07 — implementação autorizada e concluída
 
-- Itaipu Binacional: esquema oficial da usina, unidade geradora e vertedouro.
-- Confirmar o que é específico da usina e o que é simplificação didática.
+O pedido posterior de desenvolver todos os dez projetos autorizou a aplicação e envio dos commits aos repositórios privados. Substitui o estado inicial apenas documental; publicação web e posts continuam separados.
 
-Próxima ação: Obter o esquema oficial e desenhar dois percursos separados: geração e vertedouro.
+- Uma unidade geradora e uma calha independente, sem escala. Cortes e fontes oficiais em APURACAO.md, direção visual em DIRECAO-VISUAL.md.
+- Francis, rotor e eixo sincronizados, estator fixo. Vazão controla marcadores qualitativos, sem inventar relação de RPM, potência ou resposta hidráulica.
+- Sem dimensões numéricas, fluido físico, operação real, áudio ou backend. Trajetos aproximados no diorama, diferente da implantação real.
+- Corte útil desde a abertura, seis grupos, seleção/isolamento, tour, reset e PNG. Base de câmera/UI reaproveitada da coleção autorizada, sem assets do Fusquinha.
+- Revisão visual: volume de água visível, fundação prolongada até saídas e enquadramento maior. Regressão das bobinas corrigida: objetos com visibilidade individual não são fundidos.
+- Sete testes e verificações Chrome documentados em VALIDACAO.md. Sem celular físico/Safari ou homologação de engenharia.
+- Build estático local e textos para divulgação futura; nenhum deploy ou post automático.
 
 ## Como registrar mudanças
 

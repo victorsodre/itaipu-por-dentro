@@ -1,71 +1,29 @@
-# Arquitetura proposta
+# Arquitetura implementada
 
-Documento de planejamento. Nenhum comando de build ou teste existe ainda neste repositório.
+React 19.2.6 + TypeScript 5.9.3 + Three.js 0.187.0 + Vite 8.3.6. Aplicação estática, `base: './'`; lockfile versionado. Node ≥22.18. Sem backend, LLM, analytics, modelos remotos ou GPU de produção.
 
-## Base
+## Responsabilidades
 
-React + TypeScript + Three.js + Vite, como referência do Fusquinha. Fixar versões e lockfile no início da implementação, após verificar compatibilidade atual e licença do código reaproveitado. Não adotar a versão antiga do Three apenas por cópia automática.
+- `App.tsx`: relógio, seleção, isolamento, busca, tour, reset, visibilidade e movimento reduzido.
+- `simulation/hydro.ts`: estado serializável, sanitização, evolução limitada a 100 ms, curvas de geração/vertedouro e posição do marcador.
+- `scene/model.ts`: diorama autoral, seis grupos, recorte, rotor Francis ilustrativo, gerador, volume de água e calha independente.
+- `scene/rig.ts`: sincroniza turbina, eixo e rotor; mantém estator fixo; aplica visibilidade e instâncias dos marcadores.
+- `scene/runtime.ts`: iluminação, órbita, picking com recorte, seleção, enquadramento, modo malha, pausa de renderização e perda de contexto.
+- `scene/camera.ts` e `capture.ts`: enquadramento por limites e exportação 16:9/9:16 com marca, sem alterar permanentemente a câmera.
+- `content/`: catálogo estável, textos, fontes e vídeos. `ui/`: controles HTML, marca e diálogo de créditos. `styles.css`: tokens/layout responsivo.
 
-Aplicação estática executada no navegador do visitante. O MVP não requer LLM, backend nem GPU de produção permanentemente alocada. Modelagem e processamento de assets são tarefas separadas e delimitadas.
+## Estado e invariantes
 
-## Organização sugerida
+`HydroState = {generationFlow, spillwayFlow, generationProgress, spillwayProgress, rotorAngle}`. Vazões 0–1, percursos 0–1, ângulo circular. Estado inicial pausado, geração 0,65 e vertedouro 0,5, corte aberto e comparação dos dois percursos.
 
-```text
-src/
-  app/              composição da tela e estados de carregamento
-  scene/            cena, câmera, iluminação e renderização
-  interactions/     seleção, isolamento, corte e desmontagem
-  simulation/       estado determinístico do mecanismo educativo
-  content/          catálogo, explicações, vídeos e fontes
-  ui/               controles HTML acessíveis
-  styles/           tokens do ovictorlab e layout
-public/
-  models/           somente arquivos com entrega web autorizada
-  audio/            sons licenciados, carregados sob demanda
-  fonts/            fontes locais e respectivas licenças
-```
+Geração nula para seu trajeto e eixo, sem parar vertedouro. Vertedouro nulo para somente seu trajeto. Ambos nulos suspendem reprodução. Vazão altera quantidade de marcadores, não a velocidade do gerador. Velocidade constante é ilustrativa; ausência de inércia está declarada. O slider permite inspecionar o fim do percurso; reprodução seguinte retorna ao circuito.
 
-Criar só o que o piloto utilizar. Começar independente; extrair um pacote compartilhado depois que o segundo projeto comprovar reutilização concreta.
+Água da geração percorre tomada → conduto → caixa espiral → rotor Francis → tubo de sucção → rio. Vertedouro usa outra curva e não toca a turbina. Testes com amostras verificam separação geométrica da turbina e do rotor do gerador. O esquema não calcula energia, frequência, pressão, nível ou enchentes.
 
-## Contratos
+IDs: `reservoir`, `intake`, `penstock`, `turbine`, `generator`, `discharge`. Peças com visibilidade independente não entram em fusão de geometria. O corte preserva bobinas traseiras e remove as frontais; não é uma desmontagem acumulativa.
 
-- Peça: `id`, `label`, `groupId`, nós do modelo, pose de origem, descrição e referências. IDs estáveis entre atualizações.
-- Seleção: um catálogo determina o que pode ser selecionado; elementos auxiliares não capturam clique por acidente.
-- Desmontagem: transformação deriva de pose de origem e progresso 0–1; nunca acumula deslocamento a cada frame. Corte e desmontagem são modos distintos.
-- Mecanismo: estado serializável, limites explícitos, pausa e reset. Tempo de animação não depende de quantidade de frames.
-- Fontes: título, instituição/autor, URL, data de consulta, afirmação suportada e limite. Texto da interface aponta para esse catálogo.
-- Áudio: inicia após gesto, tem volume/mute e para com cena oculta ou mecanismo desligado.
+## Renderização e entrega
 
-## O que avaliar no Fusquinha
+DPR máximo 1,5, sombra 1024², limite de 30 Hz durante mudanças. Renderiza sob demanda; suspende em repouso/aba oculta. Marcadores instanciados, até 24 por percurso. Fontes e licenças locais. Recursos e medidas em VALIDACAO.md; 30 Hz é limite de trabalho, não promessa de FPS em celulares.
 
-`src/VehicleScene.tsx`: renderização/câmera/seleção. `src/catalog.ts`: agrupamento. `src/layout.ts`: posições e enquadramento. `src/vehicle-rig.ts`: pivôs e articulação. `src/vehicle-sounds.ts`: áudio. `src/engine-motion.ts`: movimento e pausa. Esses arquivos são referências de implementação, não garantem uma biblioteca pronta para outros objetos.
-
-Antes de copiar, conferir responsabilidades, licenças e dependências. Motor, material, cenário e GLB do Fusquinha não pertencem automaticamente ao novo projeto.
-
-## Orçamento inicial de desempenho
-
-Metas propostas a validar no primeiro protótipo, não resultados já medidos:
-
-- Cena em aproximadamente 30 fps durante interação no dispositivo móvel de referência registrado.
-- Renderização sob demanda quando parada; suspender trabalho em aba oculta.
-- Começar com DPR limitado a 1,5 no celular, texturas de 1K quando suficientes e cena progressiva. Ajustar por medição visual e de memória.
-- Buscar até 10 MB comprimidos para a primeira cena útil; qualquer exceção precisa de comparação antes/depois e carregamento progressivo.
-- Medir modelo, texturas, draw calls e tempo até o primeiro controle utilizável. Evitar simulação física genérica quando uma cinemática determinística explica o fenômeno.
-
-## Entrega futura
-
-Build estático com caminhos relativos ou base configurável; testar recarga direta e hospedagem em subpasta. Integração com ovictorlab.com pode usar rota ou link, a decidir quando houver aplicação pronta. Não alterar o site principal durante o desenvolvimento inicial.
-
-Captura PNG é uma possibilidade herdada do Fusquinha. Presets de câmera 16:9 e 9:16 e tour guiado são extensões planejadas; não estão implementados. Gravar vídeo exige validar o método de captura e sincronização do som.
-
-## Implementação específica
-
-Geometria: Diorama em corte com uma unidade geradora; água representada por trajetórias e volumes simples, sem partículas em excesso.
-
-Estado proposto: `idle ↔ generation; spillwayView é um percurso explicativo separado; flowVisual não representa comando real de barragem.`
-
-Invariantes que devem orientar código e testes:
-
-- A água do vertedouro não atravessa a turbina no esquema.
-- Tipo de turbina, caminho e dimensões só são associados a Itaipu após confirmação em fonte oficial.
-- Potência numérica só entra com equação, hipóteses e dados rastreáveis; MVP permanece qualitativo.
+PNG 1920×1080 /1080×1920, identifica esquema sem escala e fluxos ilustrativos. Falha de WebGL mantém catálogo e fontes. Perda de contexto interrompe cena com ação de recarregar. Sem deploy automático; site principal e Fusquinha são referências preservadas.

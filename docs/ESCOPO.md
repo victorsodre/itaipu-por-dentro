@@ -1,5 +1,7 @@
 # Escopo — Itaipu por dentro
 
+**Estado:** escopo implementado; evidência em [VALIDACAO.md](VALIDACAO.md).
+
 ## Pergunta e resultado esperado
 
 Por onde a água passa para gerar energia? O visitante deve conseguir explicar o mecanismo depois de explorar a cena e acionar seus controles.
@@ -15,11 +17,11 @@ Um corte educativo localizado, com caminho da água, uma unidade geradora simpli
 - Gerador
 - Saída de água e vertedouro separado
 
-Esses grupos são uma proposta semântica; validar sua correspondência com a geometria e as fontes antes de nomear peças como reais.
+Seis grupos semânticos implementados. O diorama é autoral e sem escala; arquitetura Francis confirmada nas fontes oficiais, geometria detalhada ilustrativa.
 
 ## Ações principais
 
-| Controle | Comportamento planejado |
+| Controle | Comportamento implementado |
 |---|---|
 | Seguir a água | Destaca o trajeto e os conjuntos relacionados. |
 | Controlar vazão ilustrativa | Altera uma animação qualitativa, sem prometer cálculo real de potência. |
@@ -29,7 +31,7 @@ Base de exploração: órbita, zoom, seleção por lista ou clique, isolamento, 
 
 ## Estado do mecanismo
 
-`idle ↔ generation; spillwayView é um percurso explicativo separado; flowVisual não representa comando real de barragem.`
+`paused ↔ playing`, com vazões e percursos independentes; `generation / spillway / compare` define destaque. O controle não representa comando real de barragem.
 
 ## Critérios específicos de conclusão
 
@@ -38,7 +40,7 @@ Base de exploração: órbita, zoom, seleção por lista ou clique, isolamento, 
 - Potência numérica só entra com equação, hipóteses e dados rastreáveis; MVP permanece qualitativo.
 
 - A pergunta inicial é respondida por uma interação observável, com texto curto e fontes acessíveis.
-- O modelo funciona no desktop e no celular de referência, com reset e fallback conferidos.
+- O modelo foi validado no desktop e em viewport móvel emulada, com reset e fallback conferidos; telefone físico permanece fora da evidência disponível.
 - Nenhum botão visível é apenas decorativo ou promete função pendente.
 
 ## Fora da primeira versão
