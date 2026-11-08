@@ -63,4 +63,4 @@ O build está em `dist/`, com caminhos relativos para funcionar em subpasta. Nã
 
 **Limites:** diorama educativo sem escala, com uma unidade e uma calha ilustrativa. Os caminhos estão aproximados para comparação; não representam a implantação real da usina. Quantidade de marcadores indica vazão qualitativa, sem RPM proporcional, potência calculada ou simulação hidráulica. Validação móvel emulada no Chrome; não ensaiado em telefone físico ou Safari.
 
-**Próxima etapa fora desta entrega:** escolher hospedagem e autorizar publicação, se desejado. Os rascunhos do X permanecem para publicação manual posterior.
+Aplicação publicada no GitHub Pages, com vídeo incorporado e links conferidos. Os rascunhos do X permanecem para publicação manual posterior.
