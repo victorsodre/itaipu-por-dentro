@@ -10,6 +10,16 @@ Um corte educativo localizado, com caminho da água, uma unidade geradora simpli
 
 Direção e autoria editorial: **Victor Sodré / ovictorlab**. [Site](https://ovictorlab.com/) · [Referência Fusquinha](https://victorsodre.github.io/fusquinha/) · [Repositório](https://github.com/victorsodre/itaipu-por-dentro).
 
+## Entenda no vídeo
+
+<a href="https://www.youtube.com/watch?v=C5yMvA3G82w"><img src="public/video-thumbnail.jpg" width="280" alt="Assistir: Quanta água o vertedouro de Itaipu aguenta? (a cheia nem chegou perto)" /></a>
+
+**[Quanta água o vertedouro de Itaipu aguenta? (a cheia nem chegou perto)](https://www.youtube.com/watch?v=C5yMvA3G82w)**
+
+O vídeo mostra o vertedouro de Itaipu. No experimento, compare esse trajeto com o caminho da água pela unidade geradora.
+
+O player incorporado fica [na página do experimento](https://victorsodre.github.io/itaipu-por-dentro/#video), com carregamento por clique e sem reprodução automática.
+
 ## Por que desenvolver
 
 O Reel sobre o vertedouro registrou 4.397 visualizações; o Short correspondente tinha 1.131 no YouTube. O projeto amplia o tema para distinguir vertedouro e geração. Consulta em 07/11/2026. Métricas acumuladas são sinais de interesse; não comprovam demanda pelo aplicativo ou alcance orgânico.
