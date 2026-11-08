@@ -7,7 +7,7 @@ Rascunhos para Victor publicar posteriormente. **Nada foi enviado.** Público: p
 Condição/mídia: Pode acompanhar uma captura real da versão local. Não anuncia uma URL pública.
 
 ```text
-Abri Itaipu por dentro em um experimento 3D educativo. Dá para seguir a água, abrir a unidade geradora e comparar dois caminhos: geração e vertedouro. O corte é um esquema sem escala, baseado em fontes oficiais.
+Itaipu por dentro já está no ar. Siga a água pela unidade geradora e compare com o caminho do vertedouro. O diorama 3D do ovictorlab explica os dois trajetos, com fontes e simplificações identificadas.
 ```
 
 ## Bastidor
@@ -20,10 +20,10 @@ No experimento de Itaipu, a água que passa pela turbina move o eixo do gerador.
 
 ## Lançamento
 
-Condição/mídia: Usar somente depois de publicar e validar o aplicativo. Anexar demonstração real; responder com a URL pública exata. Não usar endereço privado de repositório como link para experimentar.
+Condição/mídia: Anexar demonstração real e abrir a URL pública para conferir antes de enviar.
 
 ```text
-Itaipu por dentro está no ar: explore o corte educativo, siga a água e compare o caminho da geração com o vertedouro. Link na resposta.
+Itaipu por dentro está no ar: explore o corte educativo, siga a água e compare o caminho da geração com o vertedouro. https://victorsodre.github.io/itaipu-por-dentro/
 ```
 
 ## Antes de colar no X
@@ -31,5 +31,5 @@ Itaipu por dentro está no ar: explore o corte educativo, siga a água e compare
 - Conferir se o tempo verbal corresponde ao estado real do projeto.
 - Validar duração, legibilidade e texto alternativo da mídia anexada.
 - Conferir o comprimento no compositor; os rascunhos não dependem de assinatura ou postagem longa.
-- Inserir link somente quando existir e puder ser aberto pelo público.
+- Abrir a URL pública acima antes de postar; conferir também em uma janela sem sessão.
 - Após publicar, registrar data e permalink aqui. Não automatizar envios a partir deste arquivo.

@@ -1,6 +1,8 @@
 # Itaipu por dentro
 
-> **Desenvolvimento concluído e validado localmente em 07/11/2026.** Aplicação estática; repositório privado, sem deploy público. Projeto 9/10 da coleção.
+**[Abrir a experiência →](https://victorsodre.github.io/itaipu-por-dentro/)** · [Os 10 experimentos](docs/COLECAO.md) · [Publicação e manutenção](docs/PUBLICACAO.md)
+
+[![Itaipu por dentro — captura real da experiência](public/share.png)](https://victorsodre.github.io/itaipu-por-dentro/)
 
 **Por onde a água passa para gerar energia?**
 
@@ -22,7 +24,7 @@ O Reel sobre o vertedouro registrou 4.397 visualizações; o Short correspondent
 3. [Identidade visual do ovictorlab](docs/IDENTIDADE-VISUAL.md).
 4. [Arquitetura implementada e reaproveitamento do Fusquinha](docs/ARQUITETURA.md).
 5. [Assets e fontes verificadas](docs/ASSETS-E-FONTES.md).
-6. [Manutenção, validação e publicação futura](docs/MANUTENCAO.md).
+6. [Manutenção, validação e publicação](docs/MANUTENCAO.md).
 7. [Decisões e estado do projeto](docs/DECISOES.md).
 8. [Textos para o X](POSTAGENS-X.md) e [ordem da coleção](docs/COLECAO.md).
 
