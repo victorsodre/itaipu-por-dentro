@@ -169,7 +169,9 @@ dialog::backdrop{background:#050713c9;backdrop-filter:blur(7px)}
  .control-dock{width:calc(100% - var(--rail) - 30px);padding:14px}
  .flow-controls{gap:14px}
  /* Narrow desktop: the detail opens over the parts list, not over the model. */
- .inspector{left:12px;top:290px;width:202px;max-height:calc(100% - 324px);padding:16px}
+ .inspector{left:12px;top:290px;width:212px;max-height:calc(100% - 324px);padding:16px}
+ /* The list sits under the open detail; its footer would peek out cut below it. */
+ .workspace:has(.inspector) .sidebar-foot{visibility:hidden}
  .scene-mode,.view-switch{right:24px}.path-legend{right:124px;top:155px}
  /* Two columns keep the camera tools above the full-width dock. */
  .camera-tools{right:20px;top:200px;transform:none;display:grid;grid-template-columns:repeat(2,36px);gap:2px}.camera-tools>span{display:none}
@@ -218,7 +220,7 @@ dialog::backdrop{background:#050713c9;backdrop-filter:blur(7px)}
  .phase-markers button{min-height:44px;font-size:12px;text-align:left}
  .flow-controls{flex-direction:column;gap:12px}
  .flow>label{font-size:13px}.flow output{font-size:13px}.flow-compare{font-size:12px}
- .flow-marks{gap:8px}.flow-marks button{min-height:44px;font-size:12px;padding:0 12px}
+ .flow-marks{display:grid;grid-template-columns:1fr 1fr;gap:8px}.flow-marks button{min-height:44px;font-size:12px;padding:0 12px}
  .flow-fact{font-size:13px}.flow-fact a{min-height:44px}
  .mechanism-note{order:9;position:relative;inset:auto;text-align:center;font-size:11px;margin:16px 16px 0;line-height:1.6}
  footer{height:auto;min-height:70px;padding:16px;gap:12px;align-items:flex-start;flex-direction:column;font-size:11px}
