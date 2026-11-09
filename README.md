@@ -55,12 +55,13 @@ O build está em `dist/`, com caminhos relativos para funcionar em subpasta. Nã
 
 ## O que funciona
 
-- Seguir a água por geração ou vertedouro, comparar os caminhos e controlar suas vazões ilustrativas de forma independente.
+- Seguir a água por geração ou vertedouro, comparar os caminhos e controlar suas vazões de forma independente.
+- Vertedouro em m³/s, de 0 à capacidade de 62.200 m³/s, com marcas datadas e com fonte (média das Cataratas, 13/10 e 15/10/2026). A comporta de segmento abre conforme a vazão, a lâmina engrossa e o trampolim lança o jato; com a comporta fechada, nenhuma água passa.
 - Abrir a unidade e observar turbina, eixo e rotor girando juntos, com estator fixo. A água não passa pelo gerador.
-- Explorar seis conjuntos por lista/clique, busca, isolamento, zoom, tour e retorno à vista completa.
+- Explorar sete conjuntos (incluindo comporta e calha do vertedouro) por lista/toque, busca, isolamento, zoom, tour e retorno à vista completa.
 - Percurso por slider/etapas, pausa, reset, malha e PNG horizontal 1920×1080 ou vertical 1080×1920.
 - Interface responsiva, teclado, movimento reduzido, pausa em aba oculta e explicações acessíveis sem WebGL. Sem áudio ou autoplay.
 
-**Limites:** diorama educativo sem escala, com uma unidade e uma calha ilustrativa. Os caminhos estão aproximados para comparação; não representam a implantação real da usina. Quantidade de marcadores indica vazão qualitativa, sem RPM proporcional, potência calculada ou simulação hidráulica. Validação móvel emulada no Chrome; não ensaiado em telefone físico ou Safari.
+**Limites:** diorama educativo sem escala, com uma unidade e uma comporta com calha que representam o vertedouro. Os caminhos estão aproximados para comparação; não representam a implantação real da usina. A abertura da comporta é proporcional à vazão de forma ilustrativa; a vazão da geração é qualitativa, sem RPM proporcional, potência calculada ou simulação hidráulica. Validação móvel emulada no Chrome; não ensaiado em telefone físico ou Safari.
 
 Aplicação publicada no GitHub Pages, com vídeo incorporado e links conferidos. Os rascunhos do X permanecem para publicação manual posterior.

@@ -6,7 +6,7 @@ React 19.2.6 + TypeScript 5.9.3 + Three.js 0.187.0 + Vite 8.3.6. Aplicação est
 
 - `App.tsx`: relógio, seleção, isolamento, busca, tour, reset, visibilidade e movimento reduzido.
 - `simulation/hydro.ts`: estado serializável, sanitização, evolução limitada a 100 ms, curvas de geração/vertedouro e posição do marcador.
-- `scene/model.ts`: diorama autoral, seis grupos, recorte, rotor Francis ilustrativo, gerador, volume de água e calha independente.
+- `scene/model.ts`: diorama autoral, sete grupos, recorte, rotor Francis ilustrativo, gerador, volume de água e vertedouro com comporta de segmento, calha e trampolim. Lógica pura em `simulation/hydro.ts` (rotas, comporta, etapas), toque em `scene/pointer.ts`, órbita em `scene/camera.ts`.
 - `scene/rig.ts`: sincroniza turbina, eixo e rotor; mantém estator fixo; aplica visibilidade e instâncias dos marcadores.
 - `scene/runtime.ts`: iluminação, órbita, picking com recorte, seleção, enquadramento, modo malha, pausa de renderização e perda de contexto.
 - `scene/camera.ts` e `capture.ts`: enquadramento por limites e exportação 16:9/9:16 com marca, sem alterar permanentemente a câmera.

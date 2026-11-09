@@ -36,12 +36,13 @@ Usar a combinação de qualidade, uso e custo de manutenção para ajustar o pr�
 
 ## Regressões específicas
 
-1. Zerar geração: eixo/turbina param, vertedouro continua. Zerar vertedouro: geração continua. Zerar ambos: reprodução pausa.
-2. Alterar vazão positiva: marcadores mudam em quantidade; não criar relação falsa entre vazão e RPM.
+1. Zerar geração: eixo/turbina param, vertedouro continua. Zerar vertedouro: comporta fecha, calha e jato somem, marcador para antes da comporta; geração continua. Zerar ambos: reprodução pausa e o botão fica indisponível, com aviso no painel.
+2. Vertedouro: percorrer as marcas (1.500, 10.700, 12.600 e 62.200 m³/s); a comporta sobe, a lâmina e o jato crescem e o texto da marca mostra data e fonte. Geração: marcadores mudam em quantidade; não criar relação falsa entre vazão e RPM.
 3. Percorrer início/meio/fim de cada caminho. Confirmar que vertedouro não atravessa turbina e água não atravessa gerador.
 4. Abrir/fechar várias vezes: rotor/eixo sincronizados, estator fixo e bobinas traseiras preservadas no corte; reset sem deriva.
-5. Selecionar seis grupos, isolar, voltar; busca com acentos; tour; clique 3D; teclado e Escape.
+5. Selecionar sete grupos, isolar, voltar; busca com acentos; tour; toque 3D (arrastar ou tocar no vazio não pausa nem desmarca); teclado e Escape.
+8. Girar, depois redimensionar a janela, entrar em tela cheia e abrir/fechar a unidade: a direção da órbita se mantém. No celular, deslizar na vertical sobre o 3D rola a página; deslizar para o lado gira.
 6. Exportar PNGs horizontal/vertical, verificar marca, aviso sem escala, objeto inteiro e preservação da câmera.
 7. Servir `dist/` sob `/itaipu-por-dentro/`; verificar recarga, fontes locais, licenças e erros. Simular WebGL indisponível e perda de contexto.
 
-Atualizar APURACAO.md antes de acrescentar cotas, potência ou novas afirmações sobre operação. Preservar separação entre demonstração educativa e comando real.
+Atualizar APURACAO.md antes de acrescentar cotas, potência ou novas afirmações sobre operação. Números novos de vazão entram em `src/content/spillway.ts` com data e fonte. Preservar separação entre demonstração educativa e comando real.

@@ -51,3 +51,7 @@ Fluxo a conferir após cada publicação: abrir pelo cabeçalho, capa legível, 
 Nesta rodada, os dez players foram carregados no Chrome em estado pronto (`5` / cued), com o ID esperado e sem reprodução automática. Navegação pelo cabeçalho, clique/Enter, dimensões mínimas, thumbnail local e link direto aprovados; nenhuma requisição ao YouTube antes do clique ou erro JavaScript nos fluxos.
 
 O mesmo fluxo passou nas dez URLs públicas do GitHub Pages em 08/11/2026: player pronto com ID correto, sem autoplay, sem chamadas ao YouTube antes do clique, teclado e dimensões responsivas aprovados, sem erros JavaScript. A verificação confirmou carregamento do player; não assistiu integralmente aos vídeos.
+
+## Vertedouro, câmera e celular — 09/11/2026
+
+`npm test` com 19 casos (comporta fechada e abrindo com a vazão, água sob o lábio, marcador parado na comporta fechada, trampolim, rotas abaixo da superfície, trecho do conduto à vista, vazões com fonte, play sem vazão, visibilidade por raio da comporta, calha, turbina e gerador na vista inicial, órbita mantida no resize, toque × arrasto), `npm run build` e `npm run check:pages` aprovados. **Sem conferência visual em navegador nesta rodada:** o Chrome estava reservado a outro agente. Antes de publicar, repetir o roteiro de MANUTENCAO.md (itens 1, 2, 5 e 8) em 1440×900 e 390×844.

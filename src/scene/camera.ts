@@ -14,11 +14,26 @@ export function framing(bounds: Box3, aspect: number, direction: Vector3, fov = 
     const p = new Vector3(x, y, z).sub(center), toward = p.dot(forward);
     distance = Math.max(distance, Math.abs(p.dot(right)) / tanH + toward, Math.abs(p.dot(up)) / tanV + toward);
   }
-  return { center, position: center.clone().addScaledVector(forward, distance * 1.08) };
+  distance *= 1.08;
+  return { center, distance, position: center.clone().addScaledVector(forward, distance) };
 }
 
 export function fit(camera: PerspectiveCamera, bounds: Box3, direction: Vector3) {
   const pose = framing(bounds, camera.aspect, direction, camera.fov);
   camera.position.copy(pose.position); camera.lookAt(pose.center); camera.updateProjectionMatrix();
   return pose.center;
+}
+
+/** Current orbit direction, from the target toward the camera. */
+export const orbitDirection = (camera: PerspectiveCamera, target: Vector3) => camera.position.clone().sub(target);
+
+/**
+ * After an aspect change, keep the user's orbit (direction, target and zoom relative to the framing)
+ * and only scale the distance so the same part of the model stays in view.
+ */
+export function keepOrbit(camera: PerspectiveCamera, target: Vector3, bounds: Box3, previousAspect: number) {
+  const offset = orbitDirection(camera, target);
+  const before = framing(bounds, previousAspect, offset, camera.fov).distance, after = framing(bounds, camera.aspect, offset, camera.fov).distance;
+  camera.position.copy(target).addScaledVector(offset, after / before);
+  camera.lookAt(target); camera.updateProjectionMatrix();
 }
