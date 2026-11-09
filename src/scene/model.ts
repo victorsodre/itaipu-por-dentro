@@ -117,7 +117,7 @@ export function createModel(){
  const makeParticles=(color:string)=>{const o=new T.InstancedMesh(new T.SphereGeometry(.07,8,6),new T.MeshBasicMaterial({color}),MAX_PARTICLES);helpers.add(o);o.raycast=()=>{};o.frustumCulled=false;o.instanceMatrix.setUsage(T.DynamicDrawUsage);return o;};
  const particles={generation:makeParticles('#ffce78'),spillway:makeParticles('#9de3fa')};
  const marker=mesh(helpers,new T.SphereGeometry(.16,16,12),new T.MeshBasicMaterial({color:'#ffd21f'}));marker.castShadow=false;marker.raycast=()=>{};
- const cutPlane=new T.Plane(new T.Vector3(0,0,-1),1.5);
+ const cutPlane=new T.Plane(new T.Vector3(0,0,-1),CUT_Z);
  const applyCut=(cut:boolean)=>{outer.visible=spillOuter.visible=!cut;topCover.visible=!cut;coils.children.forEach((o,i)=>o.visible=!cut||Math.sin(i/30*Math.PI*2)<0);for(const m of [pipeMaterial,voluteMat,statorMat,tailMat,houseMat]){m.clippingPlanes=cut?[cutPlane]:[];m.clipShadows=true;}statorRing.visible=true;};
  let lastDepth=-1;
  /** Rebuilds flow-dependent spillway geometry only when the flow changes. */
@@ -130,8 +130,24 @@ export function createModel(){
  return {root,parts,outer,spillOuter,pipe,plate,volute,tail,turbineRotor,generatorRotor,shaftRotor,stator,spill,gate,spillWater,jetWater,spray,setSpillFlow,helpers,routeLines,particles,marker,applyCut,dispose:()=>disposeTree(root)};
 }
 export const MAX_PARTICLES=40;
+/** The cut keeps what lies behind z = 1.5, the axis of the generating unit. */
+export const CUT_Z=1.5;
 /** Whole-diorama framing box, shared by the camera, the captures and the tests. */
 export const DIORAMA_BOUNDS=new T.Box3(new T.Vector3(-8,-1.4,-2.3),new T.Vector3(10.1,8.1,8.4));
 export const DEFAULT_DIRECTION=new T.Vector3(10,7,20);
+/** Each tab has its own camera: the generation lane (z≈1.5) and the spillway lane (z≈6.4) framed on their own. */
+export const VIEW_FRAMES:Record<'compare'|'generation'|'spillway',{bounds:T.Box3;direction:T.Vector3}>={
+ compare:{bounds:DIORAMA_BOUNDS,direction:DEFAULT_DIRECTION},
+ generation:{bounds:DIORAMA_BOUNDS,direction:new T.Vector3(4,14,13)},
+ spillway:{bounds:DIORAMA_BOUNDS,direction:new T.Vector3(2,3.5,20)},
+};
+/** Box of what is actually drawn: hidden meshes are skipped and the cut removes everything in front of its plane. */
+export function visibleBounds(object:T.Object3D,cut:boolean){
+ const box=new T.Box3(),part=new T.Box3();object.updateWorldMatrix(true,true);
+ object.traverseVisible(o=>{if(!(o instanceof T.Mesh)||o instanceof T.InstancedMesh)return;part.setFromObject(o);
+  const clipped=cut&&(Array.isArray(o.material)?o.material:[o.material]).some(m=>m.clippingPlanes?.length);
+  if(clipped){part.max.z=Math.min(part.max.z,CUT_Z);if(part.min.z>part.max.z)return;}box.union(part);});
+ return box.isEmpty()?new T.Box3().setFromObject(object):box;
+}
 function silver(){return mat('#b8c5cb',.8,.28);}
 export type HydroModel=ReturnType<typeof createModel>;

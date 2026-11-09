@@ -1,5 +1,5 @@
 import test from 'node:test';import assert from 'node:assert/strict';import * as T from 'three';
-import {createModel,DIORAMA_BOUNDS,DEFAULT_DIRECTION} from './model.ts';import {applyHydro,particleCount} from './rig.ts';
+import {createModel,DIORAMA_BOUNDS,DEFAULT_DIRECTION,VIEW_FRAMES,visibleBounds} from './model.ts';import {applyHydro,particleCount} from './rig.ts';
 import {initialState,advance,setFlow,sampleRoute,penstock,gateOpening,CREST_Y,WATER_LEVEL} from '../simulation/hydro.ts';
 import {fit,framing,keepOrbit,orbitDirection} from './camera.ts';import {isTap} from './pointer.ts';
 test('turbina e rotor giram juntos, estator permanece fixo e caminhos independentes',()=>{
@@ -65,4 +65,16 @@ test('resize mantém a órbita do usuário e só ajusta a distância',()=>{
 test('toque curto seleciona; arrasto, toque longo e pinça não',()=>{
  const start={x:100,y:100,time:0};
  assert.ok(isTap(start,{x:103,y:102,time:180}));assert.ok(!isTap(start,{x:120,y:100,time:150}));assert.ok(!isTap(start,{x:101,y:100,time:900}));
+});
+test('cada aba tem câmera própria que enquadra o seu percurso',()=>{
+ const c=(view:'generation'|'spillway')=>{const cam=new T.PerspectiveCamera(38,1.6,.1,400);fit(cam,VIEW_FRAMES[view].bounds,VIEW_FRAMES[view].direction);cam.updateMatrixWorld();return cam;};
+ for(const route of ['generation','spillway'] as const){const cam=c(route);
+  for(let i=0;i<=50;i++){const p=sampleRoute(route,i/50);assert.ok(VIEW_FRAMES[route].bounds.containsPoint(p),`${route} fora da caixa`);const q=p.clone().project(cam);assert.ok(Math.abs(q.x)<1&&Math.abs(q.y)<1,`${route} fora do quadro`);}}
+ assert.ok(c('generation').position.distanceTo(c('spillway').position)>5,'as abas não repetem a mesma câmera');
+});
+test('o contorno da seleção segue o corte',()=>{
+ const m=createModel();try{const turbine=m.parts.find(p=>p.id==='turbine')!.group;
+  m.applyCut(false);const closed=visibleBounds(turbine,false);m.applyCut(true);const open=visibleBounds(turbine,true);
+  assert.ok(open.max.z<closed.max.z-.3,'aberta, a metade da frente da caixa espiral sai do contorno');
+ }finally{m.dispose();}
 });

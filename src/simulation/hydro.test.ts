@@ -56,6 +56,7 @@ test('etapas em ordem e nomes certos em cada trecho',()=>{
 test('vazões do vertedouro com fonte batem com o controle e com a conta',()=>{
  for(const m of spillwayMarks)assert.equal(spillwayCubicMeters(spillwayFraction(m.flow)),m.flow);
  assert.equal(spillwayCubicMeters(initialState().spillwayFlow),FLOOD_PEAK);assert.equal(spillwayMarks.at(-1)!.flow,SPILLWAY_CAPACITY);
- assert.deepEqual(compareFlow(12_600,SPILLWAY_CAPACITY),{percent:20,falls:8.4});assert.deepEqual(compareFlow(62_200,SPILLWAY_CAPACITY),{percent:100,falls:41.5});
+ assert.deepEqual(compareFlow(12_600,SPILLWAY_CAPACITY),{percent:20,percentLabel:'20 %',falls:8.4});assert.deepEqual(compareFlow(62_200,SPILLWAY_CAPACITY),{percent:100,percentLabel:'100 %',falls:41.5});
+ assert.equal(compareFlow(100,SPILLWAY_CAPACITY).percentLabel,'< 1 %','vazão pequena não aparece como 0 %');assert.equal(compareFlow(0,SPILLWAY_CAPACITY).percentLabel,'0 %');
  assert.equal(formatFlow(12_600).replace(/\s/g,' '),'12.600 m³/s');
 });

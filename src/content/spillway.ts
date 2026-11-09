@@ -12,5 +12,7 @@ const number=new Intl.NumberFormat('pt-BR',{maximumFractionDigits:1});
 export const formatFlow=(cubicMeters:number)=>`${number.format(cubicMeters)} m³/s`;
 /** Our arithmetic on the sourced numbers: share of capacity and multiple of the Falls average. */
 export function compareFlow(cubicMeters:number,capacity:number){
- return {percent:Math.round(cubicMeters/capacity*100),falls:Math.round(cubicMeters/FALLS_AVERAGE*10)/10};
+ const percent=Math.round(cubicMeters/capacity*100);
+ // A flow above zero never reads as 0 %: below half a percent it shows as “< 1 %”.
+ return {percent,percentLabel:cubicMeters>0&&percent===0?'< 1 %':`${percent} %`,falls:Math.round(cubicMeters/FALLS_AVERAGE*10)/10};
 }

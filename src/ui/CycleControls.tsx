@@ -20,8 +20,8 @@ export function CycleControls({hydro,following,playing,cut,disabled,setPlaying,s
   <div className="flow-controls">
    <div className="flow spillway-flow">
     <label htmlFor="spill-flow">Vazão do vertedouro <output htmlFor="spill-flow">{formatFlow(spill)}</output></label>
-    <input id="spill-flow" type="range" min="0" max={SPILLWAY_CAPACITY} step="100" value={spill} aria-valuetext={`${formatFlow(spill)}, ${compare.percent} % da capacidade`} onChange={e=>onFlow('spillway',spillwayFraction(Number(e.target.value)))}/>
-    <p className="flow-compare">{spill===0?'Comporta fechada.':`${compare.percent} % da capacidade · ${compare.falls.toLocaleString('pt-BR')}× a média das Cataratas`}</p>
+    <input id="spill-flow" type="range" min="0" max={SPILLWAY_CAPACITY} step="100" value={spill} aria-valuetext={`${formatFlow(spill)}, ${compare.percentLabel} da capacidade`} onChange={e=>onFlow('spillway',spillwayFraction(Number(e.target.value)))}/>
+    <p className="flow-compare">{spill===0?'Comporta fechada.':`${compare.percentLabel} da capacidade · ${compare.falls.toLocaleString('pt-BR')}× a média das Cataratas`}</p>
     <div className="flow-marks" role="group" aria-label="Vazões de referência">{spillwayMarks.map(m=><button key={m.flow} aria-pressed={m.flow===spill} onClick={()=>onFlow('spillway',spillwayFraction(m.flow))}>{m.label}</button>)}</div>
     {mark&&<p className="flow-fact">{mark.detail} <a href={mark.source} target="_blank" rel="noreferrer">{mark.sourceLabel} <ArrowUpRight size={12}/></a></p>}
    </div>

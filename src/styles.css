@@ -33,16 +33,19 @@ h1 span{color:var(--yellow)}
 
 /* Scene */
 .canvas-region{position:absolute;inset:0 0 0 var(--rail);background:radial-gradient(ellipse at 50% 30%,#171e31 0%,#0b0d1a00 65%)}
-.scene-host{position:absolute;inset:75px 55px 330px 0}
+/* --dock is the measured height of the control dock (App.tsx): the scene ends above it. */
+.scene-host{position:absolute;inset:75px 55px calc(var(--dock,330px) + 64px) 0}
 .scene-host canvas{display:block;width:100%;height:100%}
 .scene-mode{position:absolute;right:36px;top:43px;display:flex;align-items:center;gap:8px;font:10px var(--mono);color:var(--muted);letter-spacing:.8px;pointer-events:none}
 .mode-divider{width:1px;height:10px;background:#40465d;margin:0 5px}
 .status-dot{height:5px;width:5px;border-radius:50%;background:#727c89}
 .status-dot.active{background:var(--yellow)}
-.orbit-hint{position:absolute;bottom:338px;left:50%;transform:translateX(-50%);font-size:11px;color:#8b94ab;white-space:nowrap;pointer-events:none}
+.orbit-hint{position:absolute;bottom:calc(var(--dock,330px) + 42px);left:50%;transform:translateX(-50%);font-size:11px;color:#8b94ab;white-space:nowrap;pointer-events:none}
 .orbit-hint i{font-style:normal;padding:0 9px;color:#4a516b}
-.hint-coarse{display:none}
-@media(pointer:coarse){.hint-fine{display:none}.hint-coarse{display:inline}}
+/* Mouse hint only with a fine pointer, touch hint only with a coarse one. */
+.hint-fine,.hint-coarse{display:none}
+@media(pointer:fine){.hint-fine{display:inline}}
+@media(pointer:coarse){.hint-coarse{display:inline}}
 .scene-error{position:absolute;top:45%;left:50%;transform:translate(-50%,-50%);text-align:center;color:var(--muted);font-size:14px;z-index:5;background:#12152b;padding:30px;max-width:460px;width:85%;border:1px solid var(--border);border-radius:12px}
 .scene-error h2{font-size:20px;color:#f1f2f8}
 .scene-error p{font-size:14px;line-height:1.6}
@@ -70,7 +73,7 @@ h1 span{color:var(--yellow)}
 .view-switch{position:absolute;top:103px;right:36px;display:flex;border-bottom:1px solid #ffffff20;z-index:2}
 .view-switch button{font-size:12px;min-height:40px;padding:0 16px;color:var(--muted);border-bottom:2px solid transparent}
 .view-switch button.active{color:var(--yellow);border-bottom-color:var(--yellow)}
-.path-legend{position:absolute;top:157px;right:45px;display:flex;flex-direction:column;gap:9px;z-index:1;font:10px var(--mono);color:var(--muted);pointer-events:none}
+.path-legend{position:absolute;top:157px;right:100px;display:flex;flex-direction:column;gap:9px;z-index:1;font:10px var(--mono);color:var(--muted);pointer-events:none}
 .path-legend span{display:flex;align-items:center;gap:8px}
 .path-legend i{display:block;width:18px;height:2px}
 .generation-color{background:#f3b45d}
@@ -80,7 +83,8 @@ h1 span{color:var(--yellow)}
 .camera-tools button:hover{background:#ffffff06}
 .camera-tools>span{height:1px;width:22px;background:#ffffff12;margin:6px 0}
 .format-button{font:11px var(--mono)}
-.inspector{position:absolute;left:300px;top:222px;width:280px;padding:20px;background:#101524f5;border:1px solid #ffffff10;border-radius:8px;box-shadow:0 16px 50px #0003;z-index:5;backdrop-filter:blur(12px);animation:appear .18s ease-out}
+/* Above the dock, right of the title: max-height keeps it off the dock's controls, long notes scroll inside. */
+.inspector{position:absolute;left:340px;top:96px;width:300px;max-height:calc(100% - 96px - var(--dock,330px) - 46px);overflow:auto;padding:20px;background:#101524f5;border:1px solid #ffffff10;border-radius:8px;box-shadow:0 16px 50px #0003;z-index:5;backdrop-filter:blur(12px);animation:appear .18s ease-out}
 .inspector-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
 .inspector .eyebrow{letter-spacing:1.2px}
 .inspector h2{font-size:19px;font-weight:500;line-height:1.2;margin:10px 0}
@@ -156,15 +160,19 @@ dialog::backdrop{background:#050713c9;backdrop-filter:blur(7px)}
  :root{--rail:310px}
  .header{padding:0 54px}.heading{left:54px;top:42px}h1{font-size:68px}
  .sidebar{left:54px;width:245px;top:345px}.part-row{min-height:44px}
- .workspace{min-height:840px}.inspector{left:330px}
+ .workspace{min-height:840px}.inspector{left:380px}
 }
 @media(max-width:1100px) and (min-width:901px){
  :root{--rail:220px}
  .header{padding:0 24px}.heading{left:24px}h1{font-size:48px}.intro{max-width:200px;font-size:14px}
  .sidebar{left:24px;width:196px;top:300px}.sidebar-foot p{font-size:11px}
  .control-dock{width:calc(100% - var(--rail) - 30px);padding:14px}
- .flow-controls{gap:14px}.inspector{left:235px}
- .scene-mode,.view-switch{right:24px}.path-legend{right:26px;top:155px}.camera-tools{right:20px}
+ .flow-controls{gap:14px}
+ /* Narrow desktop: the detail opens over the parts list, not over the model. */
+ .inspector{left:12px;top:290px;width:202px;max-height:calc(100% - 324px);padding:16px}
+ .scene-mode,.view-switch{right:24px}.path-legend{right:124px;top:155px}
+ /* Two columns keep the camera tools above the full-width dock. */
+ .camera-tools{right:20px;top:200px;transform:none;display:grid;grid-template-columns:repeat(2,36px);gap:2px}.camera-tools>span{display:none}
  .collection-label{font-size:10px;letter-spacing:1px}.mechanism-note{right:24px;max-width:calc(100% - 260px);text-align:right}
 }
 
@@ -191,21 +199,23 @@ dialog::backdrop{background:#050713c9;backdrop-filter:blur(7px)}
  .mobile-actions{order:6;display:flex;gap:16px;justify-content:space-between;margin:12px 16px}
  .mobile-actions button{display:flex;align-items:center;gap:8px;min-height:44px;font-size:13px;color:var(--muted)}
  .mobile-actions button span{font:11px var(--mono);color:var(--yellow)}
- .inspector{order:7;position:relative;left:auto;top:auto;width:auto;margin:0 16px 12px;padding:16px}
+ .inspector{order:7;position:relative;left:auto;top:auto;width:auto;max-height:none;overflow:visible;margin:0 16px 12px;padding:16px}
  .inspector .eyebrow{font-size:11px}.inspector h2{font-size:20px}.inspector p{font-size:15px}
  .inspector-actions button,.part-source{min-height:44px}
  .icon-button{width:44px;height:44px}
  .control-dock{order:8;position:relative;left:auto;bottom:auto;transform:none;width:auto;margin:0 16px;padding:14px;border-radius:10px}
  .dock-top{flex-wrap:wrap;gap:8px}
+ /* Row 1: play + restart; row 2: the followed route, full width. */
  .primary{flex:1;font-size:14px}
- .follow-control{flex-direction:row;align-items:center;gap:8px;font-size:11px}
- .follow-control select{min-height:44px;font-size:14px}
+ .dock-top .icon-button{order:1}
+ .follow-control{order:2;flex-basis:100%;flex-direction:row;align-items:center;gap:8px;font-size:11px}
+ .follow-control select{flex:1;min-height:44px;font-size:14px}
  .phase-copy{order:4;flex-basis:100%;margin:4px 0 0}
  .phase-copy strong{font-size:14px}.phase-copy span{font-size:13px}
  .timeline>label{font-size:11px}
  input[type=range]{height:44px}
- .phase-markers{flex-wrap:wrap;gap:0 12px}
- .phase-markers button{min-height:44px;font-size:12px}
+ .phase-markers{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}
+ .phase-markers button{min-height:44px;font-size:12px;text-align:left}
  .flow-controls{flex-direction:column;gap:12px}
  .flow>label{font-size:13px}.flow output{font-size:13px}.flow-compare{font-size:12px}
  .flow-marks{gap:8px}.flow-marks button{min-height:44px;font-size:12px;padding:0 12px}

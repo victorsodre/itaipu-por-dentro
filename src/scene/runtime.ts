@@ -1,7 +1,7 @@
 import * as T from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
-import { createModel, DIORAMA_BOUNDS, DEFAULT_DIRECTION } from './model.ts';
+import { createModel, VIEW_FRAMES, visibleBounds } from './model.ts';
 import { applyHydro } from './rig.ts';
 import { initialState } from '../simulation/hydro.ts';
 import { fit, keepOrbit, orbitDirection } from './camera.ts';
@@ -26,12 +26,13 @@ export function createScene(host: HTMLElement, onSelect: (id: string) => void, o
   const key = new T.DirectionalLight('#fff1d2', 2.5);key.position.set(10, 25, 18);key.castShadow = true;key.shadow.mapSize.set(1024, 1024);key.shadow.camera.left = -30;key.shadow.camera.right = 30;key.shadow.camera.top = 24;key.shadow.camera.bottom = -24;key.shadow.camera.far = 90;key.shadow.bias = -.0005;scene.add(key);
   const rim = new T.DirectionalLight('#b4d3ff', 1.9);rim.position.set(-6, 5, -5);scene.add(rim);
   const model = createModel();scene.add(model.root);
-  const highlight = new T.BoxHelper(new T.Object3D(), '#ffd21f');highlight.visible = false;scene.add(highlight);
+  const highlight = new T.Box3Helper(new T.Box3(), '#ffd21f');highlight.visible = false;scene.add(highlight);
   let state: ViewState = { hydro: initialState(), pathView: 'compare', following: 'spillway', cut: true, selected: null, isolated: false, wireframe: false };
   let disposed = false, active = false, contextLost = false, last = -Infinity;
   let previousPose: {position: T.Vector3; target: T.Vector3} | null = null;
   const selectedPart = () => model.parts.find(p => p.id === state.selected);
-  const bounds = () => state.isolated && selectedPart() ? new T.Box3().setFromObject(selectedPart()!.group) : DIORAMA_BOUNDS;
+  const view = () => VIEW_FRAMES[state.pathView];
+  const bounds = () => state.isolated && selectedPart() ? visibleBounds(selectedPart()!.group, state.cut) : view().bounds;
   const invalidate = () => {if (disposed || active || document.hidden || contextLost) return;active = true;renderer.setAnimationLoop(frame);};
   function frame(time: number) {
     if (time - last < 1000 / 30) return;last = time;
@@ -41,9 +42,9 @@ export function createScene(host: HTMLElement, onSelect: (id: string) => void, o
     data.cameraPose = JSON.stringify([...camera.position.toArray(), ...controls.target.toArray()]);
     renderer.setAnimationLoop(null);active = false;
   }
-  /** Frames the bounds from a direction; the explicit reset uses the default one, everything else keeps the user's orbit. */
+  /** Frames the bounds from a direction; reset and tab changes use the tab's own camera, everything else keeps the user's orbit. */
   const frameFrom = (box: T.Box3, direction: T.Vector3) => {controls.target.copy(fit(camera, box, direction));controls.update();invalidate();};
-  const home = () => frameFrom(bounds(), DEFAULT_DIRECTION);
+  const home = () => frameFrom(bounds(), view().direction);
   const resize = () => {
     const { width, height } = host.getBoundingClientRect();if (width < 1 || height < 1) return;
     const current = renderer.getSize(new T.Vector2()), previousAspect = camera.aspect, aspect = width / height;
@@ -90,15 +91,20 @@ export function createScene(host: HTMLElement, onSelect: (id: string) => void, o
       if (previous.isolated !== state.isolated || previous.selected !== state.selected) {
         model.helpers.visible = !state.isolated;
         for (const part of model.parts) part.group.visible = !state.isolated || part.id === state.selected;
-        const selected = selectedPart();highlight.visible = Boolean(selected) && !state.isolated;
-        if (selected) highlight.setFromObject(selected.group);
+        highlight.visible = Boolean(selectedPart()) && !state.isolated;
+      }
+      // The outline follows what is drawn: selection, the cut and the spillway gate all change it.
+      const selected = selectedPart();
+      if (highlight.visible && selected && (previous.selected !== state.selected || previous.isolated !== state.isolated || previous.cut !== state.cut || previous.hydro.spillwayFlow !== state.hydro.spillwayFlow)) {
+        highlight.box.copy(visibleBounds(selected.group, state.cut));
       }
       if (!previous.isolated && state.isolated) {previousPose = {position: camera.position.clone(), target: controls.target.clone()};frameFrom(bounds(), orbitDirection(camera, controls.target));}
       if (previous.isolated && !state.isolated && previousPose) {camera.position.copy(previousPose.position);controls.target.copy(previousPose.target);controls.update();previousPose = null;}
+      if (previous.pathView !== state.pathView && !state.isolated) home();
       canvas.dataset.hydro = JSON.stringify(state.hydro);canvas.dataset.pathView = state.pathView;canvas.dataset.cut = String(state.cut);invalidate();
     },
     home,
-    focus(id) {const part = model.parts.find(p => p.id === id);if (part) frameFrom(new T.Box3().setFromObject(part.group), orbitDirection(camera, controls.target));},
+    focus(id) {const part = model.parts.find(p => p.id === id);if (part) frameFrom(visibleBounds(part.group, state.cut), orbitDirection(camera, controls.target));},
     zoom(factor) {camera.position.sub(controls.target).multiplyScalar(factor).add(controls.target);controls.update();invalidate();},
     capture(portrait = false) {saveSceneImage(renderer, scene, camera, bounds(), portrait);invalidate();},
     dispose() {
