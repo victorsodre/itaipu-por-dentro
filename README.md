@@ -2,7 +2,7 @@
 
 **[Abrir a experiência →](https://victorsodre.github.io/itaipu-por-dentro/)** · [Os 10 experimentos](docs/COLECAO.md) · [Publicação e manutenção](docs/PUBLICACAO.md)
 
-[![Itaipu por dentro — captura real da experiência](public/share.png)](https://victorsodre.github.io/itaipu-por-dentro/)
+[![Itaipu por dentro — captura real da experiência](public/share.jpg)](https://victorsodre.github.io/itaipu-por-dentro/)
 
 **Por onde a água passa para gerar energia?**
 

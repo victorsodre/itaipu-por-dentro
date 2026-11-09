@@ -1,8 +1,9 @@
-import { VideoSection } from './ui/VideoSection.tsx';
-import { CollectionNav } from './ui/CollectionNav.tsx';
+import { video } from './content/video.ts';
+import { VideoSection } from './kit/VideoSection.tsx';
+import { CollectionNav } from './kit/CollectionNav.tsx';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { ArrowLeft, ArrowRight, ArrowUpRight, Box, ChevronRight, Download, Focus, Layers3, Maximize, Minus, Plus, Search, X } from 'lucide-react';
-import { Brand } from './ui/Brand.tsx';
+import { Brand } from './kit/Brand.tsx';
 import { Sources } from './ui/Sources.tsx';
 import { CycleControls } from './ui/CycleControls.tsx';
 import { createScene } from './scene/runtime.ts';
@@ -70,7 +71,7 @@ export function App() {
       <div className="mobile-actions"><button onClick={() => setDrawer(true)}><Layers3 size={16}/>Conjuntos <span>6</span></button><button disabled={!parts.length || Boolean(error)} onClick={() => guide(0)}>Conhecer a usina <ArrowRight size={16}/></button></div>
       <CycleControls hydro={hydro} following={following} playing={playing} cut={cut} disabled={!parts.length||Boolean(error)} setPlaying={setPlaying} setCut={setCut} onFollow={route=>{setFollowing(route);setPathView(route);setIsolated(false);}} onFlow={(route,value)=>{const next=setFlow(hydro,route,value);setHydro(next);if(next.generationFlow===0&&next.spillwayFlow===0)setPlaying(false);}} onProgress={value=>{setPlaying(false);setIsolated(false);setHydro(s=>({...s,[following==='generation'?'generationProgress':'spillwayProgress']:value}));}} reset={reset}/>
       <p className="mechanism-note">VAZÕES ILUSTRATIVAS E INDEPENDENTES · A ÁGUA NÃO PASSA PELO GERADOR</p>
-    </main><VideoSection/><footer><span>UM EXPERIMENTO DO OVICTORLAB <i>© 2026</i></span><button onClick={() => setSources(true)}>Como funciona · Fontes e créditos <ArrowUpRight size={13}/></button><CollectionNav current="itaipu-por-dentro"/></footer>
+    </main><VideoSection video={video}/><footer><span>UM EXPERIMENTO DO OVICTORLAB <i>© 2026</i></span><button onClick={() => setSources(true)}>Como funciona · Fontes e créditos <ArrowUpRight size={13}/></button><CollectionNav current="itaipu-por-dentro"/></footer>
     <Sources open={sources} onClose={() => setSources(false)}/><dialog ref={dialog} className="parts-dialog" aria-label="Conjuntos da usina" onClose={() => setDrawer(false)}><div className="dialog-top"><span className="eyebrow">CONHEÇA A USINA</span><button className="icon-button" aria-label="Fechar conjuntos" onClick={() => setDrawer(false)}><X size={18}/></button></div>{list()}</dialog><span className="sr-only" role="status" aria-live="polite">{notice}</span>
   </div>;
 }
